@@ -13,4 +13,4 @@
 # Lovely JMESPath expression to extract asset URL for a certain prefix/suffix.
 # Oh yes, gotta love that beautiful and trivial escaping <3
 - set_fact:
-    noobuntu_github_release_url: "{{ gh_rel.json | json_query('assets[? starts_with(name, `\"' + item.prefix + '\"`) && ends_with(name, `\"' + item.suffix + '\"`)].browser_download_url') }}"
+    noobuntu_github_release_url: "{{ gh_rel.json | json_query('assets[? starts_with(name, `\"' + item.prefix + '\"`) && ends_with(name, `\"' + item.suffix + '\"`)].browser_download_url') | first }}"
