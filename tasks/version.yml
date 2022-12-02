@@ -7,7 +7,7 @@
 
 - name: Fetch latest release info
   uri:
-    url: "https://api.github.com/repos/{{ owner }}/{{ repo }}/releases/{% if item.tag is defined %}tags/{{ tag }}{% else %}latest{% endif %}"
+    url: "https://api.github.com/repos/{{ owner }}/{{ repo }}/releases/{% if tag is defined %}tags/{{ tag }}{% else %}latest{% endif %}"
   register: gh_rel
 
 # Lovely JMESPath expression to extract asset URL for a certain prefix/suffix.
