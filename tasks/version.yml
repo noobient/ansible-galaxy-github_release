@@ -1,16 +1,35 @@
 ---
-- name: Install jmespath for JSON parsing
-  local_action:
-    module: pip
-    name: jmespath
-    state: latest
+#- name: Install jmespath for JSON parsing
+#  local_action:
+#    module: pip
+#    name: jmespath
 
+- name: Install jq for JSON parsing
+  package:
+    name: jq
+    state: latest
+  register: installed_jq
+  when: installed_jq is not defined
+
+# Don't let Ansible fetch it as JSON, otherwise it'll do all sorts of random
+# magic on it, messing up with parsing.
 - name: Fetch latest release info
   uri:
     url: "https://api.github.com/repos/{{ owner }}/{{ repo }}/releases/{% if tag is defined %}tags/{{ tag }}{% else %}latest{% endif %}"
+    body_format: raw
+    return_content: true
   register: gh_rel
 
 # Lovely JMESPath expression to extract asset URL for a certain prefix/suffix.
 # Oh yes, gotta love that beautiful and trivial escaping <3
+#- set_fact:
+#    noobuntu_github_release_url: "{{ gh_rel.json | json_query('assets[? starts_with(name, `\"' + prefix + '\"`) && ends_with(name, `\"' + suffix + '\"`)].browser_download_url') | first }}"
+
+- name: Find asset URL
+  shell:
+    cmd: "jq --raw-output -n '$input.assets[] | select(.name| startswith(\"{{ prefix }}\")) | select(.name|endswith(\"{{ suffix }}\")) | .browser_download_url' --argjson input '{{ gh_rel.content }}'"
+  changed_when: false
+  register: json_filter
+
 - set_fact:
-    noobuntu_github_release_url: "{{ gh_rel.json | json_query('assets[? starts_with(name, `\"' + prefix + '\"`) && ends_with(name, `\"' + suffix + '\"`)].browser_download_url') | first }}"
+    noobuntu_github_release_url: "{{ json_filter.stdout_lines | first }}"
