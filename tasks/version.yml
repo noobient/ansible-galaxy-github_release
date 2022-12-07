@@ -15,7 +15,7 @@
 # magic on it, messing up with parsing.
 - name: Fetch latest release info
   uri:
-    url: "https://api.github.com/repos/{{ owner }}/{{ repo }}/releases/{% if tag is defined %}tags/{{ tag }}{% else %}latest{% endif %}"
+    url: "https://api.github.com/repos/{{ owner }}/{{ repo }}/releases/{% if tag is defined and tag | length %}tags/{{ tag }}{% else %}latest{% endif %}"
     body_format: raw
     return_content: true
   register: gh_rel

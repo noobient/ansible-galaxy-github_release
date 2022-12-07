@@ -1,0 +1,17 @@
+---
+- hosts: 127.0.0.1
+  tasks:
+    - include_role:
+        name: "{{ playbook_dir.split('/')[:-1] | last }}"
+      vars:
+        owner: "{{ item.owner }}"
+        repo: "{{ item.repo }}"
+        tag: "{{ item.tag }}"
+        prefix: "{{ item.prefix }}"
+        suffix: "{{ item.suffix }}"
+      loop:
+        - { owner: 'wp-cli', repo: 'wp-cli', tag: 'v2.7.1', prefix: 'wp-cli-', suffix: '.phar.sha256' }
+        - { owner: 'SteamRE', repo: 'DepotDownloader', tag: '', prefix: 'depotdownloader-', suffix: '.zip' }
+    # this will only print the 2nd result, but that's okay
+    - debug:
+        msg: "{{ noobuntu_github_release_url }}"
