@@ -14,4 +14,4 @@
         - { owner: 'SteamRE', repo: 'DepotDownloader', tag: '', prefix: 'depotdownloader-', suffix: '.zip' }
     # this will only print the 2nd result, but that's okay
     - debug:
-        msg: "{{ noobuntu_github_release_url }}"
+        msg: "{{ github_release_url }}"
