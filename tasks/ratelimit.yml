@@ -1,0 +1,17 @@
+---
+- name: Check GitHub rate limit status
+  uri:
+    url: https://api.github.com/rate_limit
+    body_format: raw
+    return_content: true
+  register: gh_ratelimit
+
+#- debug:
+#    msg: "Remaining requests: {{ gh_ratelimit.json.rate.remaining }}"
+
+# Guess what, 'ansible_date_time' has 'epoch_int', BUT IT'S NOT INT, it's
+# AnsibleUnsafeText just like 'epoch', pure genius.
+- name: "Waiting {{ gh_ratelimit.json.rate.reset | int - ansible_date_time.epoch | int }} seconds for rate limit to reset"
+  pause:
+    seconds: "{{ gh_ratelimit.json.rate.reset | int - ansible_date_time.epoch | int }}"
+  when: gh_ratelimit.json.rate.remaining | int == 0

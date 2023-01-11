@@ -4,14 +4,21 @@
     - include_role:
         name: "{{ playbook_dir.split('/')[:-1] | last }}"
       vars:
-        owner: "{{ item.owner }}"
-        repo: "{{ item.repo }}"
-        tag: "{{ item.tag }}"
-        prefix: "{{ item.prefix }}"
-        suffix: "{{ item.suffix }}"
-      loop:
-        - { owner: 'wp-cli', repo: 'wp-cli', tag: '', prefix: 'wp-cli-', suffix: '.phar.sha256' }
-        - { owner: 'yahoo', repo: 'CMAK', tag: '3.0.0.6', prefix: 'cmak-', suffix: '.zip' }
-    # this will only print the 2nd result, but that's okay
+        owner: 'wp-cli'
+        repo: 'wp-cli'
+        prefix: 'wp-cli-'
+        suffix: '.phar.sha256'
+    - debug:
+        msg: "{{ github_release }}"
+
+    - include_role:
+        name: "{{ playbook_dir.split('/')[:-1] | last }}"
+      vars:
+        owner: 'yahoo'
+        repo: 'CMAK'
+        prefix: 'cmak-'
+        suffix: '.zip'
+        tag: '3.0.0.6'
+        ratelimit: 'true' # bool passed as string, test casting too
     - debug:
         msg: "{{ github_release }}"

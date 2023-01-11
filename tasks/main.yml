@@ -1,2 +1,5 @@
 ---
+- include_tasks: ratelimit.yml
+  when: ratelimit is defined and ratelimit | bool
+
 - include_tasks: version.yml
