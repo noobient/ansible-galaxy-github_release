@@ -27,7 +27,7 @@
 
 - name: Find asset URL
   shell:
-    cmd: "jq --raw-output -n '$input.assets[] | select(.name| startswith(\"{{ prefix }}\")) | select(.name|endswith(\"{{ suffix }}\")) | .browser_download_url' --argjson input '{{ gh_rel.content }}'"
+    cmd: "jq --raw-output -n '$input.assets[] | select(.name| startswith(\"{{ prefix }}\")) | select(.name|endswith(\"{{ suffix }}\")) | .browser_download_url' --argjson input '{{ gh_rel.content|regex_replace(\"'\",'') }}'"
   changed_when: false
   register: json_filter
 
