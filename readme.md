@@ -39,7 +39,7 @@ This role lets you find the asset URLs of the releases of GitHub projects.
 
 | Key | Type | Example | Description |
 |---|---|---|---|
-| `github_release_url` | string | `https://github.com/wp-cli/wp-cli/releases/download/v2.7.1/wp-cli-2.7.1.phar` | Download URL for the matching asset. |
+| `github_release.url` | string | `https://github.com/wp-cli/wp-cli/releases/download/v2.7.1/wp-cli-2.7.1.phar` | Download URL for the matching asset. |
 
 ## Support
 

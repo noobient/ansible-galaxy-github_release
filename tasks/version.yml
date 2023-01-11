@@ -25,11 +25,16 @@
 #- set_fact:
 #    github_release_url: "{{ gh_rel.json | json_query('assets[? starts_with(name, `\"' + prefix + '\"`) && ends_with(name, `\"' + suffix + '\"`)].browser_download_url') | first }}"
 
+# Make sure to use quota filter to avoid errors with releases where the body
+# contains stuff like quotes, leading to errors like:
+# unexpected EOF while looking for matching `''"
+# Note that JSON *can* contain quotes, it's a Jinja2 issue.
 - name: Find asset URL
   shell:
-    cmd: "jq --raw-output -n '$input.assets[] | select(.name| startswith(\"{{ prefix }}\")) | select(.name|endswith(\"{{ suffix }}\")) | .browser_download_url' --argjson input '{{ gh_rel.content }}'"
+    cmd: "jq --raw-output -n '$input.assets[] | select(.name| startswith(\"{{ prefix }}\")) | select(.name|endswith(\"{{ suffix }}\")) | .browser_download_url' --argjson input {{ gh_rel.content | quote }}"
   changed_when: false
   register: json_filter
 
 - set_fact:
-    github_release_url: "{{ json_filter.stdout_lines | first }}"
+    github_release:
+      url: "{{ json_filter.stdout_lines | first }}"

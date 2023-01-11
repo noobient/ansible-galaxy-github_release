@@ -10,8 +10,8 @@
         prefix: "{{ item.prefix }}"
         suffix: "{{ item.suffix }}"
       loop:
-        - { owner: 'wp-cli', repo: 'wp-cli', tag: 'v2.7.1', prefix: 'wp-cli-', suffix: '.phar.sha256' }
-        - { owner: 'SteamRE', repo: 'DepotDownloader', tag: '', prefix: 'depotdownloader-', suffix: '.zip' }
+        - { owner: 'wp-cli', repo: 'wp-cli', tag: '', prefix: 'wp-cli-', suffix: '.phar.sha256' }
+        - { owner: 'yahoo', repo: 'CMAK', tag: '3.0.0.6', prefix: 'cmak-', suffix: '.zip' }
     # this will only print the 2nd result, but that's okay
     - debug:
-        msg: "{{ github_release_url }}"
+        msg: "{{ github_release }}"
