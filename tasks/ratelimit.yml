@@ -6,8 +6,13 @@
     return_content: true
   register: gh_ratelimit
 
-#- debug:
-#    msg: "Remaining requests: {{ gh_ratelimit.json.rate.remaining }}"
+- debug:
+    msg: "Remaining requests: {{ gh_ratelimit.json.rate.remaining }}"
+  when: verbose is defined and verbose | bool
+
+- name: Check current time
+  gather_facts:
+    gather_subset: date_time
 
 # Guess what, 'ansible_date_time' has 'epoch_int', BUT IT'S NOT INT, it's
 # AnsibleUnsafeText just like 'epoch', pure genius.

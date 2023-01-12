@@ -14,6 +14,7 @@ This role lets you find the asset URLs of the releases of GitHub projects.
 | `suffix` | yes | `.zip` | Pattern the asset filename must end with. |
 | `tag` | no | `v2.7.1` | GitHub release tag. If omitted, `latest` is used. |
 | `ratelimit` | no | `false` | If false, don't check if GitHub rate limit is reached, and don't wait for it to reset. The request will most likely fail. |
+| `verbose` | no | `true` | If true, print more diagnostic messages. |
 
 ## Examples
 
@@ -25,6 +26,7 @@ This role lets you find the asset URLs of the releases of GitHub projects.
     repo: 'DepotDownloader'
     prefix: 'depotdownloader-'
     suffix: '.zip'
+    verbose: true
 
 - include_role:
     name: bviktor.github_release

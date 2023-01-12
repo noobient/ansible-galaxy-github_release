@@ -1,2 +1,3 @@
 ---
 ratelimit: true
+verbose: false

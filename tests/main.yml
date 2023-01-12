@@ -8,6 +8,7 @@
         repo: 'wp-cli'
         prefix: 'wp-cli-'
         suffix: '.phar.sha256'
+        verbose: true
     - debug:
         msg: "{{ github_release }}"
 
@@ -20,5 +21,6 @@
         suffix: '.zip'
         tag: '3.0.0.6'
         ratelimit: 'true' # bool passed as string, test casting too
+        verbose: 'true'
     - debug:
         msg: "{{ github_release }}"
