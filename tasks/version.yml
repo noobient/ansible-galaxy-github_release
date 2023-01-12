@@ -18,6 +18,8 @@
     url: "https://api.github.com/repos/{{ owner }}/{{ repo }}/releases/{% if tag is defined and tag | length %}tags/{{ tag }}{% else %}latest{% endif %}"
     body_format: raw
     return_content: true
+    headers:
+      Authorization: "{% if github_token is defined and github_token | length %}Bearer {{ github_token }}{% else %}None{% endif %}"
   register: gh_rel
 
 # Lovely JMESPath expression to extract asset URL for a certain prefix/suffix.

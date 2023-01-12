@@ -4,6 +4,8 @@
     url: https://api.github.com/rate_limit
     body_format: raw
     return_content: true
+    headers:
+      Authorization: "{% if github_token is defined and github_token | length %}Bearer {{ github_token }}{% else %}None{% endif %}"
   register: gh_ratelimit
 
 - debug:

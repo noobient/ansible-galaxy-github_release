@@ -15,6 +15,34 @@ This role lets you find the asset URLs of the releases of GitHub projects.
 | `tag` | no | `v2.7.1` | GitHub release tag. If omitted, `latest` is used. |
 | `ratelimit` | no | `false` | If false, don't check if GitHub rate limit is reached, and don't wait for it to reset. The request will most likely fail. |
 | `verbose` | no | `true` | If true, print more diagnostic messages. |
+| `github_token` | no | `github_pat_ABCD1234...` | If set, GitHub API requests are authenticated using your token. See below for details. |
+
+### GitHub Token
+
+GitHub's API has very stringent rate limits, 60 requests per hour at the time of writing, so it is very easy to deplete,
+and it's often not feasible to wait hours for playbooks to complete. For this reason, you can specify your GitHub personal access token,
+which increases this limit to 5000 per hour. To acquire such a token, go to:
+
+[Fine-grained personal access tokens](https://github.com/settings/tokens?type=beta)
+
+You should restrict this token as much as possible, so the recommended scope is:
+
+- Repository access: **Public Repositories (read-only)**
+- Account permissions: **None**
+
+The other main point is how you feed this token into Ansible. Never push this token into public, or shared repositories.
+Save it into a Git-ignored variable file, e.g.:
+
+```
+---
+github_token: github_pat_ABCD1234...
+```
+
+Or specify it from the command line, e.g.:
+
+```
+ansible-playbook foo.yml -e "github_token=github_pat_ABCD1234..."
+```
 
 ## Examples
 
