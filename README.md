@@ -48,7 +48,7 @@ ansible-playbook foo.yml -e "github_token=github_pat_ABCD1234..."
 
 ```yml
 - include_role:
-    name: bviktor.github_release
+    name: noobient.github_release
   vars:
     owner: 'SteamRE'
     repo: 'DepotDownloader'
@@ -57,7 +57,7 @@ ansible-playbook foo.yml -e "github_token=github_pat_ABCD1234..."
     verbose: true
 
 - include_role:
-    name: bviktor.github_release
+    name: noobient.github_release
   vars:
     owner: 'wp-cli'
     repo: 'wp-cli'
