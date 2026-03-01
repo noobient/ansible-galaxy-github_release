@@ -18,7 +18,7 @@
 
 # Guess what, 'ansible_date_time' has 'epoch_int', BUT IT'S NOT INT, it's
 # AnsibleUnsafeText just like 'epoch', pure genius.
-- name: "Waiting {{ gh_ratelimit.json.resources.core.reset | int - ansible_date_time.epoch | int }} seconds for rate limit to reset"
+- name: "Waiting {{ gh_ratelimit.json.resources.core.reset | int - ansible_facts['date_time'].epoch | int }} seconds for rate limit to reset"
   pause:
-    seconds: "{{ gh_ratelimit.json.resources.core.reset | int - ansible_date_time.epoch | int }}"
+    seconds: "{{ gh_ratelimit.json.resources.core.reset | int - ansible_facts['date_time'].epoch | int }}"
   when: gh_ratelimit.json.resources.core.remaining | int == 0
